@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqdsad5itbuvv"]
+
+[sub_resource type="Gradient" id="Gradient_d261m"]
+colors = PackedColorArray(0.125911, 0.125911, 0.125911, 1, 0.571649, 0.571649, 0.571649, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5551n"]
+gradient = SubResource("Gradient_d261m")
+width = 256
+height = 256
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdgwu"]
+size = Vector2(20, 255)
+
+[node name="TestArea" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_5551n")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(-137, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_wdgwu")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+position = Vector2(138, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_wdgwu")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+position = Vector2(0, 78)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_wdgwu")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="."]
+position = Vector2(0, -86)
+rotation = -1.5708
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_wdgwu")

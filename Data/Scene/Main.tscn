@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8mw3wx5j0ylb"]
+
+[ext_resource type="PackedScene" uid="uid://cqdsad5itbuvv" path="res://Assets/Arch/Test_Area/Prefabs/Test_Area.tscn" id="1_jg2mv"]
+[ext_resource type="Script" path="res://Code/Engine/FGE.gd" id="1_u5rsu"]
+[ext_resource type="PackedScene" uid="uid://c675yjk2lub1" path="res://Assets/Actors/Test_Char/Prefabs/Test_Char.tscn" id="2_lvdgt"]
+
+[node name="Main" type="Node2D"]
+
+[node name="FGE" type="Node" parent="."]
+script = ExtResource("1_u5rsu")
+
+[node name="Levels" type="Node2D" parent="."]
+
+[node name="TestArea" parent="Levels" instance=ExtResource("1_jg2mv")]
+
+[node name="Actors" type="Node2D" parent="."]
+
+[node name="TestChar" parent="Actors" instance=ExtResource("2_lvdgt")]
+position = Vector2(-1, 1)
+player_active = true
+
+[node name="Camera" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Camera"]
+
+[node name="Bin" type="Node2D" parent="."]

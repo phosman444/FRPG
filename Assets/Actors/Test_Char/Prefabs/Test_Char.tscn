@@ -1,0 +1,55 @@
+[gd_scene load_steps=10 format=3 uid="uid://c675yjk2lub1"]
+
+[ext_resource type="Script" path="res://Code/Character/Character_Object.gd" id="1_4liy8"]
+[ext_resource type="Script" path="res://Code/State/Character_State.gd" id="2_qi1bg"]
+
+[sub_resource type="Gradient" id="Gradient_mxwun"]
+offsets = PackedFloat32Array(0, 0.711816)
+colors = PackedColorArray(0.896948, 5.19812e-06, 0.555375, 1, 0.899027, 0.020178, 0.564344, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0pc65"]
+gradient = SubResource("Gradient_mxwun")
+width = 32
+height = 32
+
+[sub_resource type="Resource" id="Resource_14apb"]
+resource_name = "Test_Neutral"
+script = ExtResource("2_qi1bg")
+state_name = "Test_Neutral"
+state_time = 60.0
+state_loop = true
+animation = SubResource("GradientTexture2D_0pc65")
+
+[sub_resource type="Gradient" id="Gradient_yftxt"]
+colors = PackedColorArray(0.896948, 5.19812e-06, 0.555375, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i76ry"]
+gradient = SubResource("Gradient_yftxt")
+width = 32
+height = 32
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Resource" id="Resource_5djg1"]
+resource_name = "Test_Run"
+script = ExtResource("2_qi1bg")
+state_name = "Test_Run"
+state_time = 60.0
+state_loop = true
+animation = SubResource("GradientTexture2D_i76ry")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ib41q"]
+size = Vector2(32, 32)
+
+[node name="TestChar" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_4liy8")
+movement_speed = 200.0
+state_index = Array[ExtResource("2_qi1bg")]([SubResource("Resource_14apb"), SubResource("Resource_5djg1")])
+sprite = NodePath("Sprite2D6")
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = SubResource("GradientTexture2D_0pc65")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_ib41q")
