@@ -1,8 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8mw3wx5j0ylb"]
+[gd_scene load_steps=8 format=3 uid="uid://c8mw3wx5j0ylb"]
 
 [ext_resource type="PackedScene" uid="uid://cqdsad5itbuvv" path="res://Assets/Arch/Test_Area/Prefabs/Test_Area.tscn" id="1_jg2mv"]
 [ext_resource type="Script" path="res://Code/Engine/FGE.gd" id="1_u5rsu"]
 [ext_resource type="PackedScene" uid="uid://c675yjk2lub1" path="res://Assets/Actors/Test_Char/Prefabs/Test_Char.tscn" id="2_lvdgt"]
+[ext_resource type="Texture2D" uid="uid://bgolg3kusl7ym" path="res://Assets/UI/Textures/TextBox.png" id="4_2ge7e"]
+[ext_resource type="Script" path="res://Code/UI/Main_Menu.gd" id="4_gvact"]
+
+[sub_resource type="Gradient" id="Gradient_x54c7"]
+offsets = PackedFloat32Array(0, 0.887608)
+colors = PackedColorArray(1, 1, 1, 0, 0, 0, 0, 0.607843)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rxj4j"]
+gradient = SubResource("Gradient_x54c7")
+fill_from = Vector2(1, 1)
 
 [node name="Main" type="Node2D"]
 
@@ -24,3 +34,119 @@ player_active = true
 [node name="Camera2D" type="Camera2D" parent="Camera"]
 
 [node name="Bin" type="Node2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Debug" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Debug"]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Debug"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0, 0, 0, 1)
+
+[node name="Main Menu" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_gvact")
+
+[node name="BackGround" type="TextureRect" parent="CanvasLayer/Main Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_rxj4j")
+
+[node name="Button" type="Button" parent="CanvasLayer/Main Menu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_bottom = 143.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Main Menu/Button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 40.5
+offset_top = -62.5
+offset_right = 80.5
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785397
+mouse_filter = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Main Menu/Button"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = -32.5
+offset_right = -14.5
+offset_bottom = 97.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.785397
+mouse_filter = 2
+
+[node name="Text Box" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Text Box"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -359.25
+offset_top = -250.0
+offset_right = 359.25
+offset_bottom = -29.5
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("4_2ge7e")
+expand_mode = 2
+
+[connection signal="button_down" from="CanvasLayer/Main Menu/Button" to="CanvasLayer/Main Menu" method="_quit"]
