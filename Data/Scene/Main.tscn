@@ -1,10 +1,46 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8mw3wx5j0ylb"]
+[gd_scene load_steps=19 format=3 uid="uid://c8mw3wx5j0ylb"]
 
 [ext_resource type="PackedScene" uid="uid://cqdsad5itbuvv" path="res://Assets/Arch/Test_Area/Prefabs/Test_Area.tscn" id="1_jg2mv"]
 [ext_resource type="Script" path="res://Code/Engine/FGE.gd" id="1_u5rsu"]
 [ext_resource type="PackedScene" uid="uid://c675yjk2lub1" path="res://Assets/Actors/Test_Char/Prefabs/Test_Char.tscn" id="2_lvdgt"]
 [ext_resource type="Texture2D" uid="uid://bgolg3kusl7ym" path="res://Assets/UI/Textures/TextBox.png" id="4_2ge7e"]
-[ext_resource type="Script" path="res://Code/UI/Main_Menu.gd" id="4_gvact"]
+[ext_resource type="Theme" uid="uid://b030icxgv8ysr" path="res://Data/ui_theme.tres" id="4_g3lug"]
+[ext_resource type="Script" path="res://Code/Main_Menu.gd" id="4_gvact"]
+[ext_resource type="PackedScene" uid="uid://cvtck4cvxfp3g" path="res://Assets/Actors/Test_Char/Prefabs/Test_Char2.tscn" id="4_sgn0t"]
+[ext_resource type="Script" path="res://Code/Interaction/Interactable.gd" id="4_t1i6n"]
+[ext_resource type="Script" path="res://Code/Interaction/Interaction_Event.gd" id="5_3aimt"]
+[ext_resource type="Script" path="res://Code/UI/Text_Box.gd" id="6_shwb2"]
+
+[sub_resource type="Resource" id="Resource_apedv"]
+script = ExtResource("5_3aimt")
+message = "Hello Mr.Pink"
+portrait = 1
+left_right = true
+
+[sub_resource type="Resource" id="Resource_qvui0"]
+script = ExtResource("5_3aimt")
+message = "Hello Mr.Green"
+portrait = 0
+left_right = false
+next_interaction = SubResource("Resource_apedv")
+
+[sub_resource type="Gradient" id="Gradient_mxwun"]
+offsets = PackedFloat32Array(0, 0.711816)
+colors = PackedColorArray(0.896948, 5.19812e-06, 0.555375, 1, 0.899027, 0.020178, 0.564344, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3tj8w"]
+gradient = SubResource("Gradient_mxwun")
+width = 32
+height = 32
+
+[sub_resource type="Gradient" id="Gradient_a7gwg"]
+offsets = PackedFloat32Array(0.711816)
+colors = PackedColorArray(0, 0.614682, 0.24237, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_u1ink"]
+gradient = SubResource("Gradient_a7gwg")
+width = 32
+height = 32
 
 [sub_resource type="Gradient" id="Gradient_x54c7"]
 offsets = PackedFloat32Array(0, 0.887608)
@@ -16,8 +52,10 @@ fill_from = Vector2(1, 1)
 
 [node name="Main" type="Node2D"]
 
-[node name="FGE" type="Node" parent="."]
+[node name="FGE" type="Node" parent="." node_paths=PackedStringArray("main_menu", "text_box")]
 script = ExtResource("1_u5rsu")
+main_menu = NodePath("../CanvasLayer/Main Menu")
+text_box = NodePath("../CanvasLayer/Text Box")
 
 [node name="Levels" type="Node2D" parent="."]
 
@@ -28,6 +66,18 @@ script = ExtResource("1_u5rsu")
 [node name="TestChar" parent="Actors" instance=ExtResource("2_lvdgt")]
 position = Vector2(-1, 1)
 player_active = true
+
+[node name="Interact" type="Button" parent="Actors/TestChar"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -25.0
+offset_top = -26.0
+offset_right = 25.0
+offset_bottom = 26.0
+script = ExtResource("4_t1i6n")
+loaded_interaction = SubResource("Resource_qvui0")
+
+[node name="TestChar2" parent="Actors" instance=ExtResource("4_sgn0t")]
+position = Vector2(313, 208)
 
 [node name="Camera" type="Node2D" parent="."]
 
@@ -64,7 +114,7 @@ grow_horizontal = 0
 grow_vertical = 0
 color = Color(0, 0, 0, 1)
 
-[node name="Main Menu" type="Control" parent="CanvasLayer"]
+[node name="Text Box" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("text_field", "portrait", "left_box", "text_field_r", "portrait_r", "right_box")]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -72,66 +122,14 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_gvact")
-
-[node name="BackGround" type="TextureRect" parent="CanvasLayer/Main Menu"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("GradientTexture2D_rxj4j")
-
-[node name="Button" type="Button" parent="CanvasLayer/Main Menu"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -143.0
-offset_bottom = 143.0
-grow_horizontal = 0
-
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Main Menu/Button"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 40.5
-offset_top = -62.5
-offset_right = 80.5
-offset_bottom = 67.5
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 0.785397
-mouse_filter = 2
-
-[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Main Menu/Button"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -54.5
-offset_top = -32.5
-offset_right = -14.5
-offset_bottom = 97.5
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.785397
-mouse_filter = 2
-
-[node name="Text Box" type="Control" parent="CanvasLayer"]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("6_shwb2")
+portriat_index = Array[Texture2D]([SubResource("GradientTexture2D_3tj8w"), SubResource("GradientTexture2D_u1ink")])
+text_field = NodePath("TextureRect/Text")
+portrait = NodePath("TextureRect/Sprite2D6")
+left_box = NodePath("TextureRect")
+text_field_r = NodePath("TextureRect2/Text")
+portrait_r = NodePath("TextureRect2/Sprite2D6")
+right_box = NodePath("TextureRect2")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Text Box"]
 layout_mode = 1
@@ -149,4 +147,268 @@ grow_vertical = 0
 texture = ExtResource("4_2ge7e")
 expand_mode = 2
 
-[connection signal="button_down" from="CanvasLayer/Main Menu/Button" to="CanvasLayer/Main Menu" method="_quit"]
+[node name="Text" type="RichTextLabel" parent="CanvasLayer/Text Box/TextureRect"]
+layout_mode = 0
+offset_left = 207.0
+offset_top = 83.0
+offset_right = 679.0
+offset_bottom = 183.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST "
+
+[node name="Sprite2D6" type="Sprite2D" parent="CanvasLayer/Text Box/TextureRect"]
+position = Vector2(112.25, 106)
+scale = Vector2(4, 4)
+texture = SubResource("GradientTexture2D_3tj8w")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Text Box"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 340.0
+offset_top = -250.0
+offset_right = 1058.5
+offset_bottom = -29.5
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(-1, 1)
+texture = ExtResource("4_2ge7e")
+expand_mode = 2
+
+[node name="Sprite2D6" type="Sprite2D" parent="CanvasLayer/Text Box/TextureRect2"]
+position = Vector2(111, 106)
+rotation = 3.14159
+scale = Vector2(4, -4)
+texture = SubResource("GradientTexture2D_3tj8w")
+
+[node name="Text" type="RichTextLabel" parent="CanvasLayer/Text Box/TextureRect2"]
+layout_mode = 0
+offset_left = 674.0
+offset_top = 83.0
+offset_right = 1146.0
+offset_bottom = 183.0
+scale = Vector2(-1, 1)
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+text = "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST "
+
+[node name="Main Menu" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("4_g3lug")
+script = ExtResource("4_gvact")
+
+[node name="BackGround" type="TextureRect" parent="CanvasLayer/Main Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_rxj4j")
+
+[node name="Exit" type="Button" parent="CanvasLayer/Main Menu"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_bottom = 143.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Main Menu/Exit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 40.5
+offset_top = -62.5
+offset_right = 80.5
+offset_bottom = 67.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.785397
+mouse_filter = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Main Menu/Exit"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.5
+offset_top = -32.5
+offset_right = -14.5
+offset_bottom = 97.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.785397
+mouse_filter = 2
+
+[node name="Talk" type="Button" parent="CanvasLayer/Main Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1270.0
+offset_top = 680.0
+offset_right = -1127.0
+offset_bottom = 823.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Main Menu/Talk"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 65.5
+offset_top = -8.5
+offset_right = 105.5
+offset_bottom = 121.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Main Menu/Talk"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 41.5
+offset_top = 20.5
+offset_right = 81.5
+offset_bottom = 98.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Main Menu/Talk"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -57.5
+offset_right = 11.5
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/Main Menu/Talk"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.5
+offset_top = -57.5
+offset_right = 104.5
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[node name="Talk2" type="Button" parent="CanvasLayer/Main Menu"]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -830.0
+offset_top = 680.0
+offset_right = -687.0
+offset_bottom = 823.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Main Menu/Talk2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 65.5
+offset_top = -8.5
+offset_right = 105.5
+offset_bottom = 121.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Main Menu/Talk2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 41.5
+offset_top = 20.5
+offset_right = 81.5
+offset_bottom = 98.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/Main Menu/Talk2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -57.5
+offset_right = 11.5
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[node name="ColorRect4" type="ColorRect" parent="CanvasLayer/Main Menu/Talk2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 64.5
+offset_top = -57.5
+offset_right = 104.5
+offset_bottom = -23.5
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+mouse_filter = 2
+
+[connection signal="button_down" from="Actors/TestChar/Interact" to="CanvasLayer/Main Menu" method="set_visible" binds= [true]]
+[connection signal="button_down" from="CanvasLayer/Main Menu/Exit" to="CanvasLayer/Main Menu" method="_quit"]
+[connection signal="button_down" from="CanvasLayer/Main Menu/Talk" to="CanvasLayer/Text Box" method="send_message" binds= ["TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST ", 0, false]]
+[connection signal="button_down" from="CanvasLayer/Main Menu/Talk2" to="CanvasLayer/Text Box" method="send_message" binds= ["HELLO HELLO HELLO HELLO ", 1, true]]

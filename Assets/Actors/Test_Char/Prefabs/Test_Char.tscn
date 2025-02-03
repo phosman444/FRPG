@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://c675yjk2lub1"]
 
 [ext_resource type="Script" path="res://Code/Character/Character_Object.gd" id="1_4liy8"]
-[ext_resource type="Script" path="res://Code/State/Character_State.gd" id="2_qi1bg"]
+[ext_resource type="Script" uid="uid://rts125sdbxmg" path="res://Code/State/Character_State.gd" id="2_qi1bg"]
 
 [sub_resource type="Gradient" id="Gradient_mxwun"]
 offsets = PackedFloat32Array(0, 0.711816)

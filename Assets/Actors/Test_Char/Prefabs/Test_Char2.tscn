@@ -1,0 +1,82 @@
+[gd_scene load_steps=14 format=3 uid="uid://cvtck4cvxfp3g"]
+
+[ext_resource type="Script" path="res://Code/Character/Character_Object.gd" id="1_2jssw"]
+[ext_resource type="Script" uid="uid://rts125sdbxmg" path="res://Code/State/Character_State.gd" id="2_cd2tj"]
+[ext_resource type="Script" path="res://Code/Interaction/Interactable.gd" id="3_y44v6"]
+[ext_resource type="Script" path="res://Code/Interaction/Interaction_Event.gd" id="4_ff3tx"]
+
+[sub_resource type="Gradient" id="Gradient_a7gwg"]
+offsets = PackedFloat32Array(0.711816)
+colors = PackedColorArray(0, 0.614682, 0.24237, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_guckb"]
+gradient = SubResource("Gradient_a7gwg")
+width = 32
+height = 32
+
+[sub_resource type="Resource" id="Resource_14apb"]
+resource_name = "Test_Neutral"
+script = ExtResource("2_cd2tj")
+state_name = "Test_Neutral"
+state_time = 60.0
+state_loop = true
+animation = SubResource("GradientTexture2D_guckb")
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_asek7"]
+gradient = SubResource("Gradient_a7gwg")
+width = 32
+height = 32
+
+[sub_resource type="Resource" id="Resource_5djg1"]
+resource_name = "Test_Run"
+script = ExtResource("2_cd2tj")
+state_name = "Test_Run"
+state_time = 60.0
+state_loop = true
+animation = SubResource("GradientTexture2D_asek7")
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3okgv"]
+gradient = SubResource("Gradient_a7gwg")
+width = 32
+height = 32
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ib41q"]
+size = Vector2(32, 32)
+
+[sub_resource type="Resource" id="Resource_70hve"]
+script = ExtResource("4_ff3tx")
+message = "Hello Mr.Pink"
+portrait = 1
+left_right = true
+
+[sub_resource type="Resource" id="Resource_t8v1f"]
+script = ExtResource("4_ff3tx")
+message = "Hello Mr.Green"
+portrait = 0
+left_right = false
+next_interaction = SubResource("Resource_70hve")
+
+[node name="TestChar" type="CharacterBody2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_2jssw")
+movement_speed = 200.0
+state_index = Array[ExtResource("2_cd2tj")]([SubResource("Resource_14apb"), SubResource("Resource_5djg1")])
+sprite = NodePath("Sprite2D6")
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = SubResource("GradientTexture2D_3okgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_ib41q")
+
+[node name="Interact" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -25.0
+offset_top = -26.0
+offset_right = 25.0
+offset_bottom = 26.0
+script = ExtResource("3_y44v6")
+loaded_interaction = SubResource("Resource_t8v1f")
+
+[connection signal="button_down" from="Interact" to="Interact" method="interaction_check"]

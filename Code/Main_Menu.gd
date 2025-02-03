@@ -1,5 +1,5 @@
 extends Control
-
+class_name Main_Menu
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
