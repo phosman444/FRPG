@@ -11,11 +11,16 @@ class_name  Character_Object
 var input_axis: Vector2
 
 @export_group("STATE")
-var current_state: Character_State
-@export var state_index: Array[Character_State]
+var current_state : Character_State
+@export var state_index : Array[Character_State]
 
 @export_group("FIND")
-@export var sprite: Sprite2D
+#@export var sprite: Sprite2D
+@export var sprite : AnimatedSprite2D
+
+@export_group("DATA")
+var velocity_readout : Vector2
+var old_pos : Vector2
 
 func _ready() -> void:
 
@@ -27,13 +32,19 @@ func _physics_process(delta: float) -> void:
 
 	if player_active:
 		_input_process()
-		_state_process()
+		#_state_process()
 		_movement_process()
-
+		_anim_process()
+		_data_process()
 
 func _input_process() -> void:
 
 	input_axis = Vector2(Input.get_axis("left", "right") , Input.get_axis("forward", "back"))
+
+func _data_process() -> void:
+	velocity_readout = old_pos - position
+	old_pos = position
+	print(velocity_readout)
 
 func _movement_process() -> void:
 
@@ -58,5 +69,31 @@ func _movement_process() -> void:
 	velocity = temp_velocity * movement_speed * v
 	move_and_slide()
 
-func _state_process() -> void:
-	sprite.texture = current_state.animation
+#func _state_process() -> void:
+	#sprite.texture = current_state.animation
+
+func _anim_process() -> void:
+
+	var s : float = 4 if current_state.state_name == "Test_Run" else 2
+	sprite.speed_scale = s
+
+	if velocity_readout.x > 0.05:
+		sprite.flip_h = false
+	else:
+		sprite.flip_h = true
+
+	if abs(velocity_readout.x) < 0.05:
+		if velocity_readout.y > 0.05:
+			sprite.play("Forward")
+		if velocity_readout.y < -0.05:
+			sprite.play("Back")
+	else:
+		if velocity_readout.y > 0.05:
+			sprite.play("DiagForward")
+		elif velocity_readout.y < -0.05:
+			sprite.play("DiagDown")
+		else:
+			sprite.play("Side")
+
+	if abs(velocity_readout.x) < 0.05 && abs(velocity_readout.y) < 0.05:
+		sprite.play("Idle")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c8mw3wx5j0ylb"]
+[gd_scene load_steps=20 format=3 uid="uid://c8mw3wx5j0ylb"]
 
 [ext_resource type="PackedScene" uid="uid://cqdsad5itbuvv" path="res://Assets/Arch/Test_Area/Prefabs/Test_Area.tscn" id="1_jg2mv"]
 [ext_resource type="Script" path="res://Code/Engine/FGE.gd" id="1_u5rsu"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Code/Interaction/Interactable.gd" id="4_t1i6n"]
 [ext_resource type="Script" path="res://Code/Interaction/Interaction_Event.gd" id="5_3aimt"]
 [ext_resource type="Script" path="res://Code/UI/Text_Box.gd" id="6_shwb2"]
+[ext_resource type="Script" path="res://Code/Camera/Camera_Controller.gd" id="7_7xgmu"]
 
 [sub_resource type="Resource" id="Resource_apedv"]
 script = ExtResource("5_3aimt")
@@ -79,9 +80,15 @@ loaded_interaction = SubResource("Resource_qvui0")
 [node name="TestChar2" parent="Actors" instance=ExtResource("4_sgn0t")]
 position = Vector2(313, 208)
 
-[node name="Camera" type="Node2D" parent="."]
+[node name="Camera" type="Node2D" parent="." node_paths=PackedStringArray("target")]
+script = ExtResource("7_7xgmu")
+speed = 2.0
+target = NodePath("../Actors/TestChar")
 
 [node name="Camera2D" type="Camera2D" parent="Camera"]
+zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 
 [node name="Bin" type="Node2D" parent="."]
 
